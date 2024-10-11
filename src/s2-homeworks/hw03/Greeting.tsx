@@ -31,7 +31,7 @@ const Greeting: React.FC<GreetingPropsType> = (
             id={'hw3-input'}
             value={name}
             onChange={setNameCallback}
-            className={inputClass}
+            className={error ? inputClass : ''}
             onKeyDown={onEnter}
             onBlur={onBlur}
           />
