@@ -58,7 +58,7 @@ const GreetingContainer: React.FC<GreetingContainerPropsType> = ({ users, addUse
   const onEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (name.trim() === '') {
-        setError('Ошибка! Введите имя.!');
+        setError('Ошибка! Введите имя!');
       } else {
         addUserCallback(name.trim());
         setName('');
