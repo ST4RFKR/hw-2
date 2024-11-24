@@ -26,9 +26,9 @@ function Clock() {
   const onMouseLeave = () => setShow(false);
 
   const stringTime = date.toLocaleTimeString('en-US', { hour12: false });
-  const stringDate = date.toLocaleDateString('ru-RU'); // формат: день.месяц.год
+  const stringDate = date.toLocaleDateString('ru-RU');
 
-  const stringDay = new Intl.DateTimeFormat('ru-US', { weekday: 'long' }).format(date);
+  const stringDay = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
   const stringMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
 
   return (
@@ -57,16 +57,10 @@ function Clock() {
       </div>
 
       <div className={s.buttonsContainer}>
-        <SuperButton
-          id={'hw9-button-start'}
-          disabled={!!timerId} // Заблокировано, если таймер уже запущен
-          onClick={start}>
+        <SuperButton id={'hw9-button-start'} disabled={!!timerId} onClick={start}>
           start
         </SuperButton>
-        <SuperButton
-          id={'hw9-button-stop'}
-          disabled={!timerId} // Заблокировано, если таймер не запущен
-          onClick={stop}>
+        <SuperButton id={'hw9-button-stop'} disabled={!timerId} onClick={stop}>
           stop
         </SuperButton>
       </div>
