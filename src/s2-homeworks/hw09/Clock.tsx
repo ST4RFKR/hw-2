@@ -26,9 +26,9 @@ function Clock() {
   const onMouseLeave = () => setShow(false);
 
   const stringTime = date.toLocaleTimeString('en-US', { hour12: false });
-  const stringDate = date.toLocaleDateString('en-GB'); // формат: день.месяц.год
+  const stringDate = date.toLocaleDateString('ru-RU'); // формат: день.месяц.год
 
-  const stringDay = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
+  const stringDay = new Intl.DateTimeFormat('ru-US', { weekday: 'long' }).format(date);
   const stringMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
 
   return (
