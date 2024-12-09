@@ -39,7 +39,7 @@ const HW13 = () => {
         setInfo('код 200 - обычно означает что скорее всего всё ок)');
       })
       .catch((e) => {
-        if (e.response) {
+        if (e.response.data) {
           const status = e.response.status;
           if (status === 400) {
             setCode('Код 400!');
