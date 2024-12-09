@@ -43,7 +43,7 @@ const HW14 = () => {
   }, []);
 
   const mappedTechs = techs.map((t) => (
-    <div key={t} id={'hw14-tech-' + t} className={s.tech}>
+    <div key={t} id={`hw14-tech-${t}`} className={s.tech}>
       {t}
     </div>
   ));

@@ -4,6 +4,7 @@ import React, {
   ReactNode,
   useState,
   useCallback,
+  useEffect,
 } from 'react';
 import SuperInputText from '../../../hw04/common/c1-SuperInputText/SuperInputText';
 
@@ -26,9 +27,11 @@ const SuperDebouncedInput: React.FC<SuperDebouncedInputPropsType> = ({
   ...restProps
 }) => {
   const [timerId, setTimerId] = useState<number | undefined>(undefined);
+  const [internalValue, setInternalValue] = useState(restProps.value || '');
 
   const onChangeTextCallback = useCallback(
     (value: string) => {
+      setInternalValue(value);
       onChangeText?.(value);
 
       if (onDebouncedChange) {
@@ -44,7 +47,13 @@ const SuperDebouncedInput: React.FC<SuperDebouncedInputPropsType> = ({
     [onChangeText, onDebouncedChange, timerId],
   );
 
-  return <SuperInputText onChangeText={onChangeTextCallback} {...restProps} />;
+  useEffect(() => {
+    setInternalValue(restProps.value || '');
+  }, [restProps.value]);
+
+  return (
+    <SuperInputText onChangeText={onChangeTextCallback} {...restProps} value={internalValue} />
+  );
 };
 
 export default SuperDebouncedInput;
