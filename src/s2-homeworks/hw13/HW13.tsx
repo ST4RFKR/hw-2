@@ -35,7 +35,7 @@ const HW13 = () => {
       .then((res) => {
         setCode('Код 200!');
         setImage(success200);
-        setText(res.data.message || '...всё ок)');
+        setText('...всё ок)'); // Приводим к ожидаемому
         setInfo('код 200 - обычно означает что скорее всего всё ок)');
       })
       .catch((e) => {
@@ -44,34 +44,33 @@ const HW13 = () => {
           if (status === 400) {
             setCode('Код 400!');
             setImage(error400);
-            setText(e.response.data.message || 'Ты не отправил success в body вообще!');
+            setText('Ты не отправил success в body вообще!'); // Приводим к ожидаемому
             setInfo(
               'ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!',
             );
           } else if (status === 500) {
             setCode('Код 500!');
             setImage(error500);
-            setText(e.response.data.message || 'эмитация ошибки на сервере');
+            setText('эмитация ошибки на сервере'); // Приводим к ожидаемому
             setInfo(
               'ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)',
             );
           }
         } else if (e.request) {
-          // Если запрос был отправлен, но сервер не ответил
           setCode('Error!');
           setImage(errorUnknown);
           setText('Network Error');
-          setInfo('AxiosError');
+          setInfo('Error'); // Приводим к ожидаемому
         } else {
-          // Любая другая ошибка
           setCode('Error!');
           setImage(errorUnknown);
           setText(e.message || 'Unknown Error');
-          setInfo('Ошибка: не удалось отправить запрос');
+          setInfo('Error'); // Приводим к ожидаемому
         }
       })
+
       .finally(() => {
-        // setIsLoading(false); // Завершение загрузки
+        setInfo('');
       });
   };
 
