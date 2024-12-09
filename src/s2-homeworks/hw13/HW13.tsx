@@ -8,12 +8,6 @@ import error400 from './images/400.svg';
 import error500 from './images/500.svg';
 import errorUnknown from './images/error.svg';
 
-/*
- * 1 - дописать функцию send
- * 2 - дизэйблить кнопки пока идёт запрос
- * 3 - сделать стили в соответствии с дизайном
- * */
-
 const HW13 = () => {
   const [code, setCode] = useState('');
   const [text, setText] = useState('');
@@ -28,51 +22,43 @@ const HW13 = () => {
     setImage('');
     setText('');
     setInfo('...loading');
-    // setIsLoading(true); // Начало загрузки
 
     axios
       .post(url, { success: x })
       .then((res) => {
         setCode('Код 200!');
         setImage(success200);
-        setText('...всё ок)'); // Приводим к ожидаемому
+        setText('...всё ок)');
         setInfo('код 200 - обычно означает что скорее всего всё ок)');
       })
       .catch((e) => {
-        if (e.response.data) {
+        if (e.response) {
+          // Handling server responses (e.g., 400, 500)
           const status = e.response.status;
           if (status === 400) {
             setCode('Код 400!');
             setImage(error400);
-            setText('Ты не отправил success в body вообще!'); // Приводим к ожидаемому
+            setText(e.response.data.message || 'Ты не отправил success в body вообще!');
             setInfo(
               'ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!',
             );
           } else if (status === 500) {
             setCode('Код 500!');
             setImage(error500);
-            setText('эмитация ошибки на сервере'); // Приводим к ожидаемому
+            setText('эмитация ошибки на сервере');
             setInfo(
               'ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)',
             );
           }
-        } else if (e.request) {
-          setCode('Error!');
-          setImage(errorUnknown);
-          setText('Network Error');
-          setInfo('Error'); // Приводим к ожидаемому
-        } else {
-          setCode('Error!');
-          setImage(errorUnknown);
-          setText(e.message || 'Unknown Error');
-          setInfo('Error'); // Приводим к ожидаемому
         }
+        // Handling other unexpected errors
+        setCode('Error!');
+        setImage(errorUnknown);
+        setText(e.message || 'AxiosError');
+        setInfo('An unexpected error occurred');
       })
-
       .finally(() => {
-        if (info === '...loading') {
-          setInfo(''); // Окончательное сброс состояния после запроса
-        }
+        setInfo('');
       });
   };
 
@@ -86,16 +72,13 @@ const HW13 = () => {
             id={'hw13-send-true'}
             onClick={send(true)}
             xType={'secondary'}
-            disabled={info === '...loading'}
-            // дописать
-          >
+            disabled={info === '...loading'}>
             Send true
           </SuperButton>
           <SuperButton
             id={'hw13-send-false'}
             onClick={send(false)}
             xType={'secondary'}
-            // дописать
             disabled={info === '...loading'}>
             Send false
           </SuperButton>
@@ -103,17 +86,14 @@ const HW13 = () => {
             id={'hw13-send-undefined'}
             onClick={send(undefined)}
             xType={'secondary'}
-            // дописать
             disabled={info === '...loading'}>
             Send undefined
           </SuperButton>
           <SuperButton
             id={'hw13-send-null'}
-            onClick={send(null)} // имитация запроса на не корректный адрес
+            onClick={send(null)}
             xType={'secondary'}
-            disabled={info === '...loading'}
-            // дописать
-          >
+            disabled={info === '...loading'}>
             Send null
           </SuperButton>
         </div>
